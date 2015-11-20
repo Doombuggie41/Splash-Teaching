@@ -25,7 +25,7 @@ public class goJava {
 		//So now we got a stacked deck.
 		//Now we have to shuffle it
 		Collections.shuffle(Arrays.asList(deck));
-		System.out.println("Top Card is " + deck[39].getSuit() + " " + deck[19].getValue());
+		//System.out.println("Top Card is " + deck[39].getSuit() + " " + deck[19].getValue());
 		
 		//Player and Computer draw cards
 		for(int c = 0; c < 10; c ++){
@@ -45,16 +45,20 @@ public class goJava {
 			printHandHide(other);
 			//Take an input
 			System.out.println("");
-			System.out.println("Guess a Card. Enter int the form of c1");
+			System.out.println("");
+			System.out.println("Guess a Card. Enter in the form of c1");
 			input = in.nextLine();
 			//Guess = new Card( input.charAt(0) , Integer.parseInt(input.substring(1)) );
 			//Go Through other player's cards to see if it exits
-			for (int c = 0; c < other.length; c++){
-				if(other[c].getSuit() ==  input.charAt(0) && other[c].getValue() == Integer.parseInt(input.substring(1))){
-					other[c].flip();
-					pScore++;
-					System.out.println("Match Found! You have " + pScore + "/5 matches");
-				}
+			Card oneGuess = new Card(input.charAt(0), Integer.parseInt(input.substring(1)));
+			int oneMatch = hasMatch(other, oneGuess);
+			if(oneMatch != -1){
+				other[oneMatch].flip();
+				pScore++;
+				System.out.println("Match Found! You have " + pScore + "/5 matches");
+			}
+			else{
+				System.out.println("No Match Found");
 			}
 			if(pScore == 5)
 				break;
@@ -72,16 +76,20 @@ public class goJava {
 			printHandHide(player);
 			//Take an input
 			System.out.println("");
-			System.out.println("Guess a Card. Enter int the form of c1");
+			System.out.println("");
+			System.out.println("Guess a Card. Enter in the form of c1");
 			input = in.nextLine();
 			//Guess = new Card( input.charAt(0) , Integer.parseInt(input.substring(1)) );
 			//Go Through other player's cards to see if it exits
-			for (int c = 0; c < player.length; c++){
-				if(player[c].getSuit() ==  input.charAt(0) && player[c].getValue() == Integer.parseInt(input.substring(1))){
-					player[c].flip();
-					oScore++;
-					System.out.println("Match Found! You have " + oScore + "/5 matches");
-				}
+			Card twoGuess = new Card(input.charAt(0), Integer.parseInt(input.substring(1)));
+			int twoMatch = hasMatch(player, twoGuess);
+			if(twoMatch != -1){
+				player[twoMatch].flip();
+				oScore++;
+				System.out.println("Match Found! You have " + oScore + "/5 matches");
+			}
+			else{
+				System.out.println("No Match Found");
 			}
 			System.out.println("The score is... Player 1: " + pScore +" to Player 2: " + oScore);
 			System.out.println("");
@@ -114,6 +122,15 @@ public class goJava {
 			else
 				System.out.print(" ? ? | ");
 		}
+	}	
+	
+	public static int hasMatch(Card[] d, Card card){
+		for (int c = 0; c < d.length; c++){
+			if(d[c].equals(card)){
+				return c;
+			}
+		}
+		return -1;
 	}
 
 }

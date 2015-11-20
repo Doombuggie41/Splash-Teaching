@@ -12,10 +12,7 @@ public class Card {
 	}
 	
 	public void flip(){
-		if (facedUp)
-			facedUp = false;
-		else
-			facedUp = true;
+		facedUp = !facedUp;
 	}
 	
 	public int getValue(){
@@ -26,5 +23,11 @@ public class Card {
 	}
 	public boolean isFacedUp(){
 		return facedUp;
+	}
+	public boolean equals(Card c){
+		if(c.getSuit() == suit && c.getValue() == value)
+			return true;
+		else
+			return false;
 	}
 }
