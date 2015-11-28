@@ -72,11 +72,11 @@ Inside the body of ItemManager, copy and paste the following code:
         initializeItem();
         registerItem();
     }
-
+ 
     public static void initializeItem() {
         //Constructor calls go here
     }
-
+ 
     public static void registerItem() {
         //Registration of Items go here
     }
@@ -117,33 +117,6 @@ we are now going to extend our class. Feel free to reread on how [inheritence](h
 
 to the class declaration. You will then need to import net.minecraft.item.Item. **Make sure you import the right "item" !!!** When I did this I saw several types of Item.
 
-## Item Properties
-
-Create a Constructor for the item by creating a new method as follows:
-
-    public CustomItem(){
-      //code go here
-    }
-
-Where I have the "code go here" comment, we are going to call the parent's constructor, add an unlocalized name, and set the creative tab. Modify the Constructor to look like this:
-
-    public CustomItem(){
-         super(); //super runs the parent's constructor
-         this.setUnlocalizedName("Custom Item"); //Gives the item a name ingame
-         this.setCreativeTab(CreativeTabs.tabMisc);
-    }
-
-Let's make our item do something too. In order to do so, we are going to have to create a new method that overrides the current onItemUse method... that does nothing. To do this, add the following code:
-
-    @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos position, EnumFacing side, float hitX, float hitY, float hitZ){
-		     world.createExplosion(player, position.getX() + hitX, position.getY() + hitY, position.getZ() + hitZ, 20f, true); //creates the boom
-		     return super.onItemUse(stack, player, world, position, side, hitX, hitY, hitZ); //runs the parents onItemUse method and returns
-		     //whatever that it does
-    }
-
-As a quick explanation of what this does, it takes in the ItemStack that the item is in, the player (probably you), the position of the block you are hitting, the side of the block you are hitting, and where on the block you are hitting it. Pretty in depth eh? We then create an explosion created by the player, at where you hit the block exactly in the world that the player is in. Then, the onItemUse method in the parent is run and returned.
-
 ## Texturing an Item
 
 Texturing an item requires the creation of a square image, as well as a JSON file. When I have taught similar courses in the past, I have found most issues come with the creation of these. So, I have made them for you and you may find them [here on GitHub](https://github.com/rjerue/Splash-Teaching). Download the complete zip of all of the files, and extract the folder "resources" and place it under:
@@ -164,19 +137,3 @@ Now, return to examplemod and in the *init* method, add the following under the 
 **Check to make sure that you are importing the correct things.**
 
 Now, press the green run button in Eclipse. Your item will be textured under the Misc tab.
-
-# Building the mod
-
-As you did when you ran the original command to open the workspace, open the terminal or command line in the "My Work" folder. Then, you will need to run either:
-
-### On Windows
-
-> gradlew.bat build
-
-### On OSX/Linux
-
-> ./gradlew build
-
-Your mod should then be in a folder marked build/libs. You may use this JAR file on any Forge installation by putting it in the mods folder. Do note that I added a second sword item in the class because I had extra time. Its creation is not specifically covered in this writeup, but it is pretty self explanatory and commented.
-
-Happy Coding, and enjoy!
